@@ -1,0 +1,76 @@
+services:
+    # image project
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        working_dir: /var/www/
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        volumes:
+            - ./:/var/www
+            - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/local.ini
+        depends_on:
+            - redis
+        networks:
+            - application
+
+    # nginx
+    nginx:
+        image: nginx:alpine
+        restart: unless-stopped
+        environment:
+            - PHP_IDE_CONFIG="serverName=localhost
+        ports:
+            - "85:85"
+            - "443:443"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/:/etc/nginx/conf.d/
+        networks:
+            - application
+
+    # db mysql
+    db:
+        image: mysql:8.0.19
+        platform: linux/x86_64
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE:-application}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+            MYSQL_PASSWORD: ${DB_PASSWORD:-userpass}
+            MYSQL_USER: ${DB_USERNAME:-username}
+        volumes:
+            - ./.docker/mysql/dbdata:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - application
+
+    # queue
+#    queue:
+#        image: especializati/application9-app
+#        restart: unless-stopped
+#        command: "php artisan queue:work"
+#        volumes:
+#            - ./:/var/www
+#        depends_on:
+#            - redis
+#            - app
+#        networks:
+#            - application
+
+    # redis
+    redis:
+        image: redis:latest
+        ports:
+            - "6379:6379"
+        environment:
+            - REDIS_PASSWORD={REDIS_PASSWORD}
+        networks:
+            - application
+
+networks:
+    application:
+        driver: bridge
