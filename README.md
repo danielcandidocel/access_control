@@ -10,6 +10,63 @@ With this system API, you can manage your users by your system. Here you have a 
 - MySQL 8.0+
 
 ## Start your project
+Clone this repository.
+
+``` 
+    git clone https://github.com/danielcandidocel/access_control.git "project_name"
+```
+
+Enter in the project folder and run the following commands:
+
+``` 
+    cd project_name 
+    docker-compose up -d --build
+```
+
+After that, you need to enter in your repository:
+
+``` 
+    docker-compose exec app bash
+```
+
+Run your migrations and seeders with the following command:
+
+``` 
+    php artisan migrate --seed
+```
+This command will create a user with the following credentials:
+
+``` 
+    email:superadmin@example.com
+    password:password
+    or
+    email: admin@example.com
+    password: password
+```
+
+Also will create the following roles:
+
+``` 
+    Super Admin
+    Admin
+    User
+```
+
+You can see the permissions in the database. By default, the Super Admin has all permissions.
+
+You can create your own roles and permissions.
+Or you can sync the roles with the users.
+
+All the functions you can see in the route files.
+
+``` 
+    routes/api.php
+```
+
+You can use this user to access the system and create your own users, roles, and permissions.
+
+
+
 
 
 ## Contact
