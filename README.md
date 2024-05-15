@@ -65,7 +65,7 @@ All the functions you can see in the route files.
 
 You can use this user to access the system and create your own users, roles, and permissions.
 
-
+Always you create a rote and you define a name for it, and run the seeders, the system will create a permission with the same name. And SuperAmin role will have this permission.
 
 
 
