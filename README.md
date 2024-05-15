@@ -23,6 +23,12 @@ Enter in the project folder and run the following commands:
     docker-compose up -d --build
 ```
 
+After that, you need to enter in your repository:
+
+``` 
+    docker-compose exec app bash
+```
+
 Run composer to install all dependencies:
 
 ```
@@ -33,12 +39,6 @@ Create your .env file.
 
 ```
     cp .env.example .env
-```
-
-After that, you need to enter in your repository:
-
-``` 
-    docker-compose exec app bash
 ```
 
 Run your migrations and seeders with the following command:
