@@ -23,6 +23,18 @@ Enter in the project folder and run the following commands:
     docker-compose up -d --build
 ```
 
+Run composer to install all dependencies:
+
+```
+    composer install
+```
+
+Create your .env file.
+
+```
+    cp .env.example .env
+```
+
 After that, you need to enter in your repository:
 
 ``` 
